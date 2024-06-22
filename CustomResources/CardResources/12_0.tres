@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CardRes" load_steps=3 format=3 uid="uid://b4laj5n2p8rjo"]
+
+[ext_resource type="Script" path="res://CustomResources/card.gd" id="1_ppwdx"]
+[ext_resource type="Texture2D" uid="uid://dpjgfty3bddqa" path="res://Assets/Cards/12_0.png" id="2_6t2d6"]
+
+[resource]
+script = ExtResource("1_ppwdx")
+id = "12_0"
+month = 11
+type = 0
+subtype = 0
+sprite = ExtResource("2_6t2d6")

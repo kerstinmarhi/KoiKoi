@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Stats" load_steps=3 format=3 uid="uid://d00tdthhpiag8"]
+
+[ext_resource type="Resource" uid="uid://b6mj15gd8d13v" path="res://CustomResources/card_deck.tres" id="1_cs4nd"]
+[ext_resource type="Script" path="res://CustomResources/stats.gd" id="1_e0vym"]
+
+[resource]
+script = ExtResource("1_e0vym")
+health = 10
+cards_per_turn = 1
+draw_pile = ExtResource("1_cs4nd")

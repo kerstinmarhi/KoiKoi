@@ -1,0 +1,72 @@
+[gd_scene load_steps=8 format=3 uid="uid://cbbbmxausp8u0"]
+
+[ext_resource type="FontFile" uid="uid://bobwwwgmk83ke" path="res://Fonts/Orchidee/OrchideeMedium.ttf" id="1_iy25a"]
+[ext_resource type="Script" path="res://Scripts/StartMenu.gd" id="1_mst7h"]
+[ext_resource type="Texture2D" uid="uid://dhbuu4lo2j18f" path="res://Assets/BG.png" id="1_r02y2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_kmkcr"]
+font = ExtResource("1_iy25a")
+font_size = 60
+outline_size = 5
+outline_color = Color(0.200809, 0.200809, 0.200809, 1)
+shadow_size = 17
+shadow_color = Color(0, 0, 0, 0.0862745)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vcu1k"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_et4ik"]
+bg_color = Color(0, 0, 0, 0.862745)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4me2y"]
+bg_color = Color(0, 0, 0, 0.862745)
+
+[node name="Start" type="Node2D"]
+metadata/_edit_lock_ = true
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 784.0
+texture = ExtResource("1_r02y2")
+
+[node name="Label" type="Label" parent="."]
+offset_top = 48.0
+offset_right = 1152.0
+offset_bottom = 216.0
+text = "Koi Koi: Raise of Yakuza"
+label_settings = SubResource("LabelSettings_kmkcr")
+horizontal_alignment = 1
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_mst7h")
+
+[node name="Button_End" type="Button" parent="Control"]
+material = SubResource("CanvasItemMaterial_vcu1k")
+layout_mode = 1
+anchors_preset = -1
+offset_left = 360.0
+offset_top = 424.0
+offset_right = 808.0
+offset_bottom = 552.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_et4ik")
+text = "Beenden"
+
+[node name="Button_NewGame" type="Button" parent="Control"]
+material = SubResource("CanvasItemMaterial_vcu1k")
+layout_mode = 0
+offset_left = 352.0
+offset_top = 248.0
+offset_right = 800.0
+offset_bottom = 376.0
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_4me2y")
+text = "Neues Spiel"

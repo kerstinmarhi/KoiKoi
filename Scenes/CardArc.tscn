@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bus77jto5mxc5"]
+
+[sub_resource type="Curve" id="Curve_yx0y1"]
+min_value = 0.2
+_data = [Vector2(0, 0.2), 0.0, 0.0, 0, 0, Vector2(0.879747, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.2), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="CardArc" type="Line2D"]
+width_curve = SubResource("Curve_yx0y1")
+default_color = Color(0.49422, 0.664047, 0.405804, 1)

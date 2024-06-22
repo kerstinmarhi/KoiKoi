@@ -1,0 +1,128 @@
+[gd_scene load_steps=13 format=3 uid="uid://cuy3m5tyi53a"]
+
+[ext_resource type="Script" path="res://Scripts/MainGame.gd" id="1_1c8ww"]
+[ext_resource type="PackedScene" uid="uid://dohnfu37l30fb" path="res://Scenes/Card.tscn" id="2_4vj44"]
+[ext_resource type="Texture2D" uid="uid://8ckt7jr8e3i7" path="res://Assets/Holz Clean.jpg" id="2_q67lw"]
+[ext_resource type="PackedScene" uid="uid://id6lo3gxylak" path="res://Scenes/Enemy.tscn" id="3_2ycq3"]
+[ext_resource type="PackedScene" uid="uid://c5sox2ilplqtl" path="res://Scenes/Pool_Card.tscn" id="3_bmmyx"]
+[ext_resource type="PackedScene" uid="uid://cy2bht1wiu6uf" path="res://Scenes/Player.tscn" id="3_flagf"]
+[ext_resource type="Script" path="res://Scripts/ui/hand.gd" id="3_nut5a"]
+[ext_resource type="PackedScene" uid="uid://gi1fxjqfbvk5" path="res://Scenes/CardTargetSelector.tscn" id="4_2k831"]
+[ext_resource type="Resource" uid="uid://d00tdthhpiag8" path="res://CustomResources/player.tres" id="4_fwy1v"]
+[ext_resource type="Script" path="res://Scripts/enemy.gd" id="4_uved6"]
+[ext_resource type="Resource" uid="uid://yrca1gcmgnto" path="res://CustomResources/enemy1.tres" id="5_7h5m4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eo7st"]
+size = Vector2(640, 379.625)
+
+[node name="GameScene" type="Node2D"]
+script = ExtResource("1_1c8ww")
+metadata/_edit_lock_ = true
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0.573792, 0.573792, 0.573792, 0.901961)
+offset_right = 1152.0
+offset_bottom = 704.0
+texture = ExtResource("2_q67lw")
+expand_mode = 1
+
+[node name="Enemy" parent="." instance=ExtResource("3_2ycq3")]
+script = ExtResource("4_uved6")
+character_stats = ExtResource("5_7h5m4")
+
+[node name="Player" parent="." instance=ExtResource("3_flagf")]
+position = Vector2(0, 485)
+character_stats = ExtResource("4_fwy1v")
+
+[node name="CardPool" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="CardPool" type="CanvasLayer" parent="CardPool"]
+
+[node name="GridContainer" type="GridContainer" parent="CardPool/CardPool"]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.39
+anchor_right = 0.5
+anchor_bottom = 0.39
+offset_left = -178.0
+offset_top = -161.0
+offset_right = 178.0
+offset_bottom = 162.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 8
+columns = 4
+metadata/_edit_lock_ = true
+
+[node name="Card6" parent="CardPool/CardPool/GridContainer" instance=ExtResource("3_bmmyx")]
+layout_mode = 2
+
+[node name="Card" parent="CardPool/CardPool/GridContainer" instance=ExtResource("3_bmmyx")]
+layout_mode = 2
+
+[node name="Card2" parent="CardPool/CardPool/GridContainer" instance=ExtResource("3_bmmyx")]
+layout_mode = 2
+
+[node name="Card3" parent="CardPool/CardPool/GridContainer" instance=ExtResource("3_bmmyx")]
+layout_mode = 2
+
+[node name="Card4" parent="CardPool/CardPool/GridContainer" instance=ExtResource("3_bmmyx")]
+layout_mode = 2
+
+[node name="Card5" parent="CardPool/CardPool/GridContainer" instance=ExtResource("3_bmmyx")]
+layout_mode = 2
+
+[node name="Card7" parent="CardPool/CardPool/GridContainer" instance=ExtResource("3_bmmyx")]
+layout_mode = 2
+
+[node name="Card8" parent="CardPool/CardPool/GridContainer" instance=ExtResource("3_bmmyx")]
+layout_mode = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CardPool"]
+position = Vector2(576, 258.188)
+shape = SubResource("RectangleShape2D_eo7st")
+metadata/_edit_lock_ = true
+
+[node name="CardTargetSelector" parent="." instance=ExtResource("4_2k831")]
+
+[node name="PlayerHand" type="CanvasLayer" parent="." groups=["layer_ui"]]
+
+[node name="Hand" type="HBoxContainer" parent="PlayerHand"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -500.0
+offset_top = -160.0
+offset_right = 500.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+script = ExtResource("3_nut5a")
+
+[node name="Card" parent="PlayerHand/Hand" instance=ExtResource("2_4vj44")]
+layout_mode = 2
+
+[node name="Card2" parent="PlayerHand/Hand" instance=ExtResource("2_4vj44")]
+layout_mode = 2
+
+[node name="Card3" parent="PlayerHand/Hand" instance=ExtResource("2_4vj44")]
+layout_mode = 2
+
+[node name="Card4" parent="PlayerHand/Hand" instance=ExtResource("2_4vj44")]
+layout_mode = 2
+
+[node name="Card5" parent="PlayerHand/Hand" instance=ExtResource("2_4vj44")]
+layout_mode = 2
+
+[node name="Card6" parent="PlayerHand/Hand" instance=ExtResource("2_4vj44")]
+layout_mode = 2
+
+[node name="Card7" parent="PlayerHand/Hand" instance=ExtResource("2_4vj44")]
+layout_mode = 2
+
+[node name="Card8" parent="PlayerHand/Hand" instance=ExtResource("2_4vj44")]
+layout_mode = 2

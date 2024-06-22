@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://dfoqfytuvnhre"]
+
+[ext_resource type="Script" path="res://Scripts/stats_ui.gd" id="1_v3nnj"]
+[ext_resource type="Texture2D" uid="uid://dj5iipn168glo" path="res://Assets/hands/right/5i.png" id="2_31s4b"]
+[ext_resource type="Texture2D" uid="uid://bit0mhn4q3trc" path="res://Assets/hands/left/0.png" id="2_4430b"]
+[ext_resource type="Texture2D" uid="uid://ch1v8r5p3cuem" path="res://Assets/UI/kenney_fantasy-ui-borders/PNG/Default/Border/panel-border-015.png" id="4_od0f2"]
+
+[node name="StatsUi" type="HBoxContainer"]
+custom_minimum_size = Vector2(215, 163)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -107.5
+offset_right = 107.5
+offset_bottom = 163.0
+grow_horizontal = 2
+alignment = 1
+script = ExtResource("1_v3nnj")
+
+[node name="BGColor" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(215, 163)
+layout_mode = 2
+color = Color(1, 1, 1, 0.458824)
+
+[node name="PointsLeft" type="Sprite2D" parent="BGColor"]
+unique_name_in_owner = true
+position = Vector2(59.5, 80)
+texture = ExtResource("2_4430b")
+
+[node name="PointsRight" type="Sprite2D" parent="BGColor"]
+unique_name_in_owner = true
+position = Vector2(155.5, 80)
+texture = ExtResource("2_31s4b")
+
+[node name="Frame" type="TextureRect" parent="BGColor"]
+modulate = Color(0.537255, 0.458824, 0.262745, 1)
+custom_minimum_size = Vector2(215, 163)
+layout_mode = 0
+offset_right = 215.0
+offset_bottom = 163.0
+texture = ExtResource("4_od0f2")
