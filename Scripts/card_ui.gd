@@ -40,7 +40,7 @@ func set_card_data(data):
 func update_card_display():
 	if card_data:
 		# Lade das entsprechende Bild basierend auf den Monat und Typ
-		$SpriteCard.texture = load("res://Assets/Cards/%s_%s.png" % [card_data.month, card_data.type])
+		$SpriteCard.texture = load("res://Assets/Cards/%s.png" % card_data.id)
 
 
 func _on_drop_point_detector_area_entered(area):

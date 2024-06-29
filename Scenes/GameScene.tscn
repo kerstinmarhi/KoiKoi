@@ -29,6 +29,7 @@ expand_mode = 1
 [node name="Enemy" parent="." instance=ExtResource("3_2ycq3")]
 script = ExtResource("4_uved6")
 character_stats = ExtResource("5_7h5m4")
+play_interval = 3.0
 
 [node name="Player" parent="." instance=ExtResource("3_flagf")]
 position = Vector2(0, 485)
