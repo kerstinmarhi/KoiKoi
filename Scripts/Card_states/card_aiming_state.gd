@@ -8,7 +8,9 @@ func enter():
 	offset.x -= card.size.x/2
 	card.animate_to_position(card.parent.global_position + offset, 0.2)
 	card.drop_point_detector.monitoring = false
+	
 	Events.card_aim_started.emit(card)
+	
 	
 func exit():
 	Events.card_aim_ended.emit(card)

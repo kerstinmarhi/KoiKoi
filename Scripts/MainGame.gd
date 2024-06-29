@@ -21,7 +21,6 @@ func _ready():
 	deck = DeckRes.duplicate() as CardPile
 	deck.shuffle()
 	deal_initial_cards()
-	start_round()
 	
 # Karten ziehen
 func draw_cards(num_cards: int) -> Array:

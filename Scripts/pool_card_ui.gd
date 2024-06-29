@@ -20,7 +20,12 @@ func update_card_display():
 
 
 func _on_drop_point_detector_area_entered(area):
-	selected.show()
+	var main_game=get_tree().get_root().get_node("GameScene/PlayerHand/Hand")
+	for child:Card in main_game.get_children():
+		if child.card_state_machine.current_state.state == CardState.State.AIMING:
+			if child.card_data.month == card_data.month:
+				print("Child Month: %s, Selected Month: %s" %[child.card_data.month, card_data.month])
+				selected.show()
 
 
 func _on_drop_point_detector_area_exited(area):
