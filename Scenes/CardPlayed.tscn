@@ -1,0 +1,74 @@
+[gd_scene load_steps=9 format=3 uid="uid://julga6vnjg3p"]
+
+[ext_resource type="Script" path="res://Scripts/card_ui.gd" id="1_hm26i"]
+[ext_resource type="Script" path="res://Scripts/card_state_machine.gd" id="2_t2vh4"]
+[ext_resource type="Script" path="res://Scripts/Card_states/card_base_state.gd" id="3_68ry0"]
+[ext_resource type="Script" path="res://Scripts/Card_states/card_clicked_state.gd" id="4_53d6f"]
+[ext_resource type="Script" path="res://Scripts/Card_states/card_dragging_state.gd" id="5_ibxf7"]
+[ext_resource type="Script" path="res://Scripts/Card_states/card_released_state.gd" id="6_7bwmm"]
+[ext_resource type="Script" path="res://Scripts/Card_states/card_aiming_state.gd" id="7_lwklm"]
+[ext_resource type="Texture2D" uid="uid://ch1v8r5p3cuem" path="res://Assets/UI/kenney_fantasy-ui-borders/PNG/Default/Border/panel-border-015.png" id="8_ohirt"]
+
+[node name="Card" type="Control"]
+custom_minimum_size = Vector2(24, 40)
+layout_mode = 3
+anchor_right = 0.095
+anchor_bottom = 0.324
+offset_right = -85.44
+offset_bottom = -169.952
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(43, 80)
+script = ExtResource("1_hm26i")
+metadata/_edit_lock_ = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="SpriteCard" type="Sprite2D" parent="."]
+position = Vector2(12, 20)
+scale = Vector2(0.04, 0.04)
+
+[node name="CardStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_t2vh4")
+initial_state = NodePath("CardBaseState")
+
+[node name="CardBaseState" type="Node" parent="CardStateMachine"]
+script = ExtResource("3_68ry0")
+
+[node name="CardClickedState" type="Node" parent="CardStateMachine"]
+script = ExtResource("4_53d6f")
+state = 1
+
+[node name="CardDraggingState" type="Node" parent="CardStateMachine"]
+script = ExtResource("5_ibxf7")
+state = 2
+
+[node name="CardReleasedState" type="Node" parent="CardStateMachine"]
+script = ExtResource("6_7bwmm")
+state = 4
+
+[node name="CardAimingState" type="Node" parent="CardStateMachine"]
+script = ExtResource("7_lwklm")
+state = 3
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0.537322, 0.457424, 0.262157, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_ohirt")
+expand_mode = 1
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

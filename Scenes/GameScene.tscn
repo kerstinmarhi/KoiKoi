@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cuy3m5tyi53a"]
+[gd_scene load_steps=14 format=3 uid="uid://cuy3m5tyi53a"]
 
 [ext_resource type="Script" path="res://Scripts/MainGame.gd" id="1_1c8ww"]
 [ext_resource type="PackedScene" uid="uid://dohnfu37l30fb" path="res://Scenes/Card.tscn" id="2_4vj44"]
@@ -11,6 +11,7 @@
 [ext_resource type="Resource" uid="uid://d00tdthhpiag8" path="res://CustomResources/player.tres" id="4_fwy1v"]
 [ext_resource type="Script" path="res://Scripts/enemy.gd" id="4_uved6"]
 [ext_resource type="Resource" uid="uid://yrca1gcmgnto" path="res://CustomResources/enemy1.tres" id="5_7h5m4"]
+[ext_resource type="PackedScene" uid="uid://scxwwubrecip" path="res://Scenes/PlayedCards.tscn" id="12_xff40"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eo7st"]
 size = Vector2(640, 379.625)
@@ -127,3 +128,13 @@ layout_mode = 2
 
 [node name="Card8" parent="PlayerHand/Hand" instance=ExtResource("2_4vj44")]
 layout_mode = 2
+
+[node name="PlayerPlayedCards" parent="." instance=ExtResource("12_xff40")]
+offset_left = 960.0
+offset_top = 360.0
+offset_right = 960.0
+offset_bottom = 360.0
+
+[node name="EnemyPlayedCards" parent="." instance=ExtResource("12_xff40")]
+offset_left = 960.0
+offset_right = 960.0

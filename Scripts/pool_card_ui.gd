@@ -24,7 +24,6 @@ func _on_drop_point_detector_area_entered(area):
 	for child:Card in main_game.get_children():
 		if child.card_state_machine.current_state.state == CardState.State.AIMING:
 			if child.card_data.month == card_data.month:
-				print("Child Month: %s, Selected Month: %s" %[child.card_data.month, card_data.month])
 				selected.show()
 
 

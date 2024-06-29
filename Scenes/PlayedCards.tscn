@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://scxwwubrecip"]
+
+[ext_resource type="Texture2D" uid="uid://ch1v8r5p3cuem" path="res://Assets/UI/kenney_fantasy-ui-borders/PNG/Default/Border/panel-border-015.png" id="1_ojma8"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_b3rfc"]
+
+[node name="PlayedCards" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 176.0
+offset_bottom = 288.0
+size_flags_horizontal = 4
+color = Color(1, 1, 1, 0.458824)
+
+[node name="GridContainer" type="GridContainer" parent="ColorRect"]
+material = SubResource("CanvasItemMaterial_b3rfc")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 16.0
+offset_right = -8.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 6
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0.537322, 0.457424, 0.262157, 1)
+layout_mode = 0
+offset_right = 176.0
+offset_bottom = 288.0
+texture = ExtResource("1_ojma8")

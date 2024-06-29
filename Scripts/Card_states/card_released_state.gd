@@ -8,6 +8,9 @@ func enter():
 		played=true
 		print("play card for targets:", card.targets)
 		
+		var target_card = card.targets[0]  # Only the first matching target is considered
+		
+		
 
 func on_input(_event: InputEvent):
 	if played:

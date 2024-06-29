@@ -1,3 +1,4 @@
+class_name Game
 extends Node2D
 
 var player_hand = []
@@ -13,7 +14,10 @@ var enemy_played_cards = []
 @onready var DeckRes = preload("res://CustomResources/card_deck.tres")
 @onready var CardScene = preload("res://Scenes/Card.tscn")
 @onready var PoolCardScene = preload("res://Scenes/Pool_Card.tscn")
+@onready var PlayedCardScene = preload("res://Scenes/CardPlayed.tscn")
 
+
+@onready var played_cards_display=$PlayerPlayedCards/ColorRect/GridContainer
 var deck
 
 func _ready():
@@ -22,18 +26,13 @@ func _ready():
 	deck.shuffle()
 	deal_initial_cards()
 	
-# Karten ziehen
-func draw_cards(num_cards: int) -> Array:
-	var cards = []
-	for i in range(num_cards):
-		if not deck.empty():
-			cards.append(deck.draw_card())
-	return cards
 
 # Teile die Anfangskarten aus
 func deal_initial_cards():
-	player_hand = draw_cards(8)
-	table_cards = draw_cards(8)
+	for i in range(8):
+		player_hand.append(deck.draw_card())
+		table_cards.append(deck.draw_card())
+		enemy_hand.append(deck.draw_card())
 	
 	update_player_hand_ui(player_hand, $PlayerHand/Hand)
 	update_pool_ui(table_cards, $CardPool/CardPool/GridContainer)
@@ -46,6 +45,13 @@ func update_player_hand_ui(hand, container: Container):
 		card_instance.set_card_data(card)
 		container.add_child(card_instance)
 		card_instance.parent = container
+		
+	clear_container(played_cards_display)
+	for card in player_played_cards:
+		var card_instance = PlayedCardScene.instantiate()
+		card_instance.set_card_data(card)
+		played_cards_display.add_child(card_instance)
+		card_instance.parent= played_cards_display
 
 # Aktualisiere die UI mit den ausgeteilten Karten
 func update_pool_ui(hand, container: Container):
@@ -69,34 +75,3 @@ func _on_round_ended():
 	print("Round ended")
 	start_round()  
 	
-func play_card(card: CardRes, player: Player):
-	# Hier wird die Logik implementiert, wenn eine Karte gespielt wird
-	# Zum Beispiel:
-	if player == $Player:
-		player_played_cards.append(card)
-	else:
-		enemy_played_cards.append(card)
-
-	# Weitere Spiellogik hier hinzufügen
-	check_for_matches(card)
-	update_scores()
-	check_for_game_end()
-
-func check_for_matches(card: CardRes):
-	# Überprüfe, ob die gespielte Karte mit einer auf dem Tisch übereinstimmt
-	for pool_card in table_cards:
-		if pool_card.month == card.month:
-			# Logik für das Match
-			print("Match found!")
-			table_cards.erase(pool_card)
-			table_cards.append(card)  # Beispiel für das Hinzufügen der gespielten Karte
-
-func update_scores():
-	# Logik zur Aktualisierung der Punktestände
-	pass
-
-func check_for_game_end():
-	# Überprüfe, ob das Spiel zu Ende ist
-	if deck.empty() and player_hand.empty() and enemy_hand.empty():
-		print("Game Over!")
-		# Weitere Logik für das Spielende
