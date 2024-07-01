@@ -1,12 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://cbbbmxausp8u0"]
+[gd_scene load_steps=9 format=3 uid="uid://cbbbmxausp8u0"]
 
 [ext_resource type="FontFile" uid="uid://bobwwwgmk83ke" path="res://Fonts/Orchidee/OrchideeMedium.ttf" id="1_iy25a"]
 [ext_resource type="Script" path="res://Scripts/StartMenu.gd" id="1_mst7h"]
-[ext_resource type="Texture2D" uid="uid://dhbuu4lo2j18f" path="res://Assets/BG.png" id="1_r02y2"]
+[ext_resource type="PackedScene" uid="uid://djmieh5me8ifr" path="res://Scenes/BackGroundMusic.tscn" id="1_o60ua"]
+[ext_resource type="Texture2D" uid="uid://d28fuc3ns8v8j" path="res://Assets/7602494.jpg" id="1_rqtvh"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kmkcr"]
 font = ExtResource("1_iy25a")
-font_size = 60
+font_size = 88
 outline_size = 5
 outline_color = Color(0.200809, 0.200809, 0.200809, 1)
 shadow_size = 17
@@ -23,16 +24,28 @@ bg_color = Color(0, 0, 0, 0.862745)
 [node name="Start" type="Node2D"]
 metadata/_edit_lock_ = true
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
 offset_right = 1152.0
-offset_bottom = 784.0
-texture = ExtResource("1_r02y2")
+offset_bottom = 648.0
+color = Color(0.94902, 0.870588, 0.866667, 1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 248.0
+offset_right = 896.0
+offset_bottom = 648.0
+grow_horizontal = 2
+texture = ExtResource("1_rqtvh")
+expand_mode = 1
+stretch_mode = 4
 
 [node name="Label" type="Label" parent="."]
 offset_top = 48.0
 offset_right = 1152.0
 offset_bottom = 216.0
-text = "Koi Koi: Raise of Yakuza"
+text = "Rise of Yakuza"
 label_settings = SubResource("LabelSettings_kmkcr")
 horizontal_alignment = 1
 
@@ -42,6 +55,8 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_mst7h")
+
+[node name="BGMusic" parent="Control" instance=ExtResource("1_o60ua")]
 
 [node name="Button_End" type="Button" parent="Control"]
 material = SubResource("CanvasItemMaterial_vcu1k")

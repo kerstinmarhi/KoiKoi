@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://julga6vnjg3p"]
 
-[ext_resource type="Script" path="res://Scripts/card_ui.gd" id="1_hm26i"]
+[ext_resource type="Script" path="res://Scripts/card_played_ui.gd" id="1_eybqu"]
 [ext_resource type="Script" path="res://Scripts/card_state_machine.gd" id="2_t2vh4"]
 [ext_resource type="Script" path="res://Scripts/Card_states/card_base_state.gd" id="3_68ry0"]
 [ext_resource type="Script" path="res://Scripts/Card_states/card_clicked_state.gd" id="4_53d6f"]
@@ -10,16 +10,16 @@
 [ext_resource type="Texture2D" uid="uid://ch1v8r5p3cuem" path="res://Assets/UI/kenney_fantasy-ui-borders/PNG/Default/Border/panel-border-015.png" id="8_ohirt"]
 
 [node name="Card" type="Control"]
-custom_minimum_size = Vector2(24, 40)
+custom_minimum_size = Vector2(28, 48)
 layout_mode = 3
 anchor_right = 0.095
 anchor_bottom = 0.324
-offset_right = -85.44
-offset_bottom = -169.952
+offset_right = -79.44
+offset_bottom = -163.952
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(43, 80)
-script = ExtResource("1_hm26i")
+script = ExtResource("1_eybqu")
 metadata/_edit_lock_ = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -32,12 +32,12 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="SpriteCard" type="Sprite2D" parent="."]
-position = Vector2(12, 20)
-scale = Vector2(0.04, 0.04)
+position = Vector2(14, 24)
+scale = Vector2(0.05, 0.05)
 
 [node name="CardStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_t2vh4")
-initial_state = NodePath("CardBaseState")
+initial_state = NodePath("")
 
 [node name="CardBaseState" type="Node" parent="CardStateMachine"]
 script = ExtResource("3_68ry0")

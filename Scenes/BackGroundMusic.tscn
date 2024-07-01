@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://djmieh5me8ifr"]
+
+[ext_resource type="AudioStream" uid="uid://c6oub5kiy28du" path="res://Assets/sakura-dance-background-music-traditional-japanese-165338.mp3" id="1_r3s61"]
+[ext_resource type="Script" path="res://Scripts/audio_player.gd" id="2_mytse"]
+
+[node name="BGMusic" type="AudioStreamPlayer2D"]
+stream = ExtResource("1_r3s61")
+autoplay = true
+script = ExtResource("2_mytse")

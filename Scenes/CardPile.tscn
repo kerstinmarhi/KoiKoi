@@ -1,0 +1,53 @@
+[gd_scene load_steps=2 format=3 uid="uid://djlsm52k2cugq"]
+
+[ext_resource type="Texture2D" uid="uid://dwgls4nmwie7q" path="res://Assets/UI/kenney_fantasy-ui-borders/PNG/Default/Border/panel-border-014.png" id="1_mndwe"]
+
+[node name="Card" type="Control"]
+custom_minimum_size = Vector2(86, 160)
+layout_mode = 3
+anchor_right = 0.095
+anchor_bottom = 0.324
+offset_right = -23.44
+offset_bottom = -49.952
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(43, 80)
+metadata/_edit_lock_ = true
+
+[node name="Frame" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 104.0
+offset_bottom = 176.0
+color = Color(1, 1, 1, 0.458824)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.215403, 0.151969, 0.0924737, 1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0.537322, 0.457424, 0.262157, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_mndwe")
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
