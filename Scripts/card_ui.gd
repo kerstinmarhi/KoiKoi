@@ -53,12 +53,12 @@ func _on_drop_point_detector_area_exited(area):
 # save position of card in hand
 func save_initial_position():
 	original_position = global_position
-	print("Saved initial position: ", original_position)
+	#print("Saved initial position: ", original_position)
 
 # return card to hand
 func return_to_original_position():
 	global_position = original_position
-	print("Returning to initial position: ", original_position)
+	#print("Returning to initial position: ", original_position)
 
 # validate card position
 func validate_card_position():
@@ -66,7 +66,7 @@ func validate_card_position():
 		return_to_original_position()
 	else:
 		card_moveable = false
-		print("Card placed in valid drop zone")
+		#print("Card placed in valid drop zone")
 		
 func animate_to_position(new_position: Vector2, duration: float):
 	tween=create_tween().set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_OUT)
@@ -77,3 +77,5 @@ func _set_card(value: CardRes):
 		await ready
 	card=value
 	image.texture=card.sprite
+	
+

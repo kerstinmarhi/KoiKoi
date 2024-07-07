@@ -1,3 +1,4 @@
+class_name  PlayedCard
 extends Control
 
 @export var card: CardRes : set = _set_card

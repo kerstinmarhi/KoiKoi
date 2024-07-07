@@ -35,9 +35,8 @@ mouse_filter = 2
 position = Vector2(14, 24)
 scale = Vector2(0.05, 0.05)
 
-[node name="CardStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+[node name="CardStateMachine" type="Node" parent="."]
 script = ExtResource("2_t2vh4")
-initial_state = NodePath("")
 
 [node name="CardBaseState" type="Node" parent="CardStateMachine"]
 script = ExtResource("3_68ry0")

@@ -21,7 +21,13 @@ func update_card_display():
 
 func _on_drop_point_detector_area_entered(area):
 	var main_game=get_tree().get_root().get_node("GameScene/PlayerHand/Hand")
+	var drawn_card=get_tree().get_root().get_node("GameScene/DrawnCardBox")
 	for child:Card in main_game.get_children():
+		if child.card_state_machine.current_state.state == CardState.State.AIMING:
+			if child.card_data.month == card_data.month:
+				selected.show()
+	
+	for child:Card in drawn_card.get_children():
 		if child.card_state_machine.current_state.state == CardState.State.AIMING:
 			if child.card_data.month == card_data.month:
 				selected.show()

@@ -29,3 +29,4 @@ func on_input(event: InputEvent) -> void:
 	elif minimum_drag_time_elapsed and confirm:
 		get_viewport().set_input_as_handled()
 		transition_requested.emit(self,CardState.State.RELEASED)
+		

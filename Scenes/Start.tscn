@@ -10,7 +10,7 @@ font = ExtResource("1_iy25a")
 font_size = 88
 outline_size = 5
 outline_color = Color(0.200809, 0.200809, 0.200809, 1)
-shadow_size = 17
+shadow_size = 8
 shadow_color = Color(0, 0, 0, 0.0862745)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vcu1k"]
