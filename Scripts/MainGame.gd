@@ -127,7 +127,7 @@ func remove_cards(card:Card, child:PoolCard):
 	print("Player Match found.")
 	
 	update()
-	draw_and_play_card()
+	
 	
 func remove_enemy_cards(card:CardRes, poolchild:CardRes):
 	
@@ -172,7 +172,6 @@ func draw_and_play_card():
 	if deck.cards.size() <= 0:
 		pass
 		
-	#player_hand_container.set_process(false)
 	clear_container(drawn_card_display)
 	var drawn_card = deck.draw_card()
 	print("Player drew a card: ", drawn_card)
@@ -181,6 +180,7 @@ func draw_and_play_card():
 		
 func end_turn():
 	update()
+	drawn_card_display.hide()
 	if current_turn == Turn.PLAYER:
 		player_hand_container.set_process(false)
 		current_turn = Turn.ENEMY
@@ -215,18 +215,30 @@ func enemy_draw_and_play_card():
 	var drawn_card = deck.draw_card()
 	var found_card = false
 	print("Enemy drew a card: ", drawn_card)
+	drawn_card_display.add_child(card_instantiate(drawn_card))
 	drawn_card_display.show()
+	await get_tree().create_timer(3.0).timeout
 	for poolchild in table_cards:
 		if drawn_card.month == poolchild.month:
-			await get_tree().create_timer(3.0).timeout
 			remove_enemy_cards(drawn_card,poolchild)
 			found_card = true
 	if not found_card:
 		reparent_card(drawn_card)
-	
+		
 	end_turn()
 
 func _on_round_ended():
 	print("Round ended")
 	start_round()  
+	
+func is_card_in_container(card: Node) -> String:
+	
+	if card == drawn_card_display.get_child(0):
+		return "drawn_card_display"
+	
+	for child in player_hand_container.get_children():
+		if child == card:
+			return "player_hand_container"
+	
+	return "none"
 	

@@ -1,6 +1,7 @@
 extends CardState
 
 const MOUSE_Y_SNAPBACK_TRESHOLD := 700
+var placed = false
 
 func enter():
 	card.targets.clear()
@@ -16,22 +17,29 @@ func enter():
 func exit():
 	Events.card_aim_ended.emit(card)
 	
-	var game_scene:Game = get_tree().get_root().get_node("GameScene")
+	var game_scene:Node = get_tree().get_root().get_node("GameScene")
 	if game_scene is Game:
-		if card.get_parent() == get_tree().get_root().get_node("GameScene/DrawnCardBox"):
-			game_scene.player.played_cards.append(card.card_data)
-			game_scene.end_turn()
-		
+		var pool = get_tree().get_root().get_node("GameScene/CardPool/CardPool/GridContainer")
+		if placed:
+			if game_scene.is_card_in_container(card) == "drawn_card_display":
+				game_scene.reparent_card(card.card_data)
+				game_scene.end_turn()
+			elif game_scene.is_card_in_container(card) == "player_hand_container":
+				game_scene.reparent_card(card.card_data)
+				game_scene.draw_and_play_card()
 		else:
-			# Remove the card from hand and pool
-			var pool = get_tree().get_root().get_node("GameScene/CardPool/CardPool/GridContainer")
 			for child:PoolCard in pool.get_children():
 				if child.selected.is_visible():
-					game_scene.remove_cards(card,child)
-			print("Player played card.")
+					if game_scene.is_card_in_container(card) == "drawn_card_display":
+						game_scene.remove_cards(card,child)
+						game_scene.end_turn()
+					elif game_scene.is_card_in_container(card) == "player_hand_container":
+						game_scene.remove_cards(card,child)
+						game_scene.draw_and_play_card()
+		print("Player played card.")
 	else:
 		print("GameScene node not found or not of type Game")
-			
+	
 	
 	
 func on_input(event: InputEvent):
@@ -46,9 +54,6 @@ func on_input(event: InputEvent):
 		transition_requested.emit(self, CardState.State.RELEASED)
 	elif place:
 		get_viewport().set_input_as_handled()
-		var game_scene: Node = get_tree().get_root().get_node("GameScene")
-		if game_scene is Game:
-			transition_requested.emit(self, CardState.State.BASE)
-			game_scene.reparent_card(card.card_data)
-		else:
-			print("GameScene node not found or not of type Game")
+		transition_requested.emit(self, CardState.State.BASE)
+		placed = true
+
