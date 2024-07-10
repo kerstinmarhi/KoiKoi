@@ -19,6 +19,7 @@
 size = Vector2(640, 379.625)
 
 [node name="GameScene" type="Node2D"]
+process_mode = 1
 script = ExtResource("1_1c8ww")
 metadata/_edit_lock_ = true
 
@@ -30,15 +31,18 @@ texture = ExtResource("2_q67lw")
 expand_mode = 1
 
 [node name="Enemy" parent="." instance=ExtResource("3_2ycq3")]
+process_mode = 3
 script = ExtResource("4_uved6")
 character_stats = ExtResource("5_7h5m4")
 play_interval = 3.0
 
 [node name="Player" parent="." instance=ExtResource("3_flagf")]
+process_mode = 3
 position = Vector2(0, 485)
 character_stats = ExtResource("4_fwy1v")
 
 [node name="CardPool" type="Area2D" parent="."]
+process_mode = 1
 collision_layer = 2
 
 [node name="CardPool" type="CanvasLayer" parent="CardPool"]
@@ -90,8 +94,10 @@ shape = SubResource("RectangleShape2D_eo7st")
 metadata/_edit_lock_ = true
 
 [node name="CardTargetSelector" parent="." instance=ExtResource("4_2k831")]
+process_mode = 1
 
 [node name="PlayerHand" type="CanvasLayer" parent="." groups=["layer_ui"]]
+process_mode = 1
 
 [node name="Hand" type="HBoxContainer" parent="PlayerHand"]
 anchors_preset = 7
@@ -138,16 +144,19 @@ offset_right = 104.0
 offset_bottom = 388.0
 
 [node name="PlayerPlayedCards" parent="." instance=ExtResource("12_xff40")]
+process_mode = 1
 offset_left = 960.0
 offset_top = 360.0
 offset_right = 960.0
 offset_bottom = 360.0
 
 [node name="EnemyPlayedCards" parent="." instance=ExtResource("12_xff40")]
+process_mode = 1
 offset_left = 960.0
 offset_right = 960.0
 
 [node name="DrawnCardBox" type="AspectRatioContainer" parent="."]
+process_mode = 1
 custom_minimum_size = Vector2(86, 160)
 offset_left = 134.0
 offset_top = 236.0
@@ -156,3 +165,39 @@ offset_bottom = 396.0
 
 [node name="Card" parent="DrawnCardBox" instance=ExtResource("14_fah71")]
 layout_mode = 2
+
+[node name="WinningCondition" type="Window" parent="."]
+process_mode = 3
+initial_position = 1
+size = Vector2i(500, 210)
+visible = false
+
+[node name="Camera2D" type="Camera2D" parent="WinningCondition"]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WinningCondition/Camera2D"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="WinningCondition/Camera2D/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Neues Yaku! Willst du aufhören oder weitermachen?"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="WinningCondition/Camera2D/VBoxContainer"]
+layout_mode = 2
+
+[node name="Shobu" type="Button" parent="WinningCondition/Camera2D/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Shobu"
+
+[node name="KoiKoi" type="Button" parent="WinningCondition/Camera2D/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Koi Koi "
+
+[connection signal="pressed" from="WinningCondition/Camera2D/VBoxContainer/HBoxContainer/Shobu" to="." method="_on_shobu_pressed"]
+[connection signal="pressed" from="WinningCondition/Camera2D/VBoxContainer/HBoxContainer/KoiKoi" to="." method="_on_koi_koi_pressed"]

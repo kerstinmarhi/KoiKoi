@@ -5,7 +5,7 @@ extends Node2D
 @onready var stats_ui : StatsUI = $StatsUi as StatsUI
 var hand: Array[CardRes] = []
 var played_cards: Array[CardRes] = []
-
+var stored_points:int = 0
 
 func set_character_stats(value: Stats):
 	if value == null:
@@ -34,9 +34,7 @@ func take_damage(damage:int):
 	if character_stats.health<=0:
 		return
 	character_stats.take_damage(damage)
-	
-	if character_stats.health <= 0:
-		queue_free()
+	stats_ui.update_points(character_stats)
 
 
 

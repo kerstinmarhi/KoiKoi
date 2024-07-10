@@ -22,20 +22,32 @@ var table_cards = []
 @onready var pool_card_container=$CardPool/CardPool/GridContainer
 var deck
 
+@onready var popup_window = $WinningCondition
 
 #-----SETUP---------------------------------------------------------------
 func _ready():
 	BackGroundMusic.play_bg_music()
-	deck = DeckRes.duplicate() as CardPile
 	start_new_game()
+	
+func _input(event):
+	if get_tree().paused:
+		return
 
 func start_new_game():
+	current_turn = Turn.PLAYER
+	popup_window.hide()
+	deck = DeckRes.duplicate() as CardPile
 	deck.shuffle()
 	deal_initial_cards()
 	drawn_card_display.hide()
 	start_round()
 
 func deal_initial_cards():
+	player.hand.clear()
+	player.played_cards.clear()
+	table_cards.clear()
+	enemy.hand.clear()
+	enemy.played_cards.clear()
 	for i in range(8):
 		player.hand.append(deck.draw_card())
 		table_cards.append(deck.draw_card())
@@ -128,7 +140,6 @@ func remove_cards(card:Card, child:PoolCard):
 	
 	update()
 	
-	
 func remove_enemy_cards(card:CardRes, poolchild:CardRes):
 	
 	enemy.played_cards.append(poolchild)
@@ -181,20 +192,34 @@ func draw_and_play_card():
 func end_turn():
 	update()
 	drawn_card_display.hide()
+	var count = check_winning_conditions()
 	if current_turn == Turn.PLAYER:
+		if count - player.stored_points > 0:
+			player.stored_points = count
+			get_tree().paused = true
+			on_popup_show()
 		player_hand_container.set_process(false)
 		current_turn = Turn.ENEMY
 		enemy_play_turn()
 	else:
+		if count - enemy.stored_points > 0:
+			enemy.stored_points = count
+			get_tree().paused = true
+			on_popup_show()
 		player_hand_container.set_process(true)
 		current_turn = Turn.PLAYER
+	
+	if player.hand.size() == 0 and enemy.hand.size() == 0:
+		start_new_game()
 
 func enemy_play_turn():
 	if current_turn == Turn.PLAYER:
 		pass
 	if enemy.hand.size() <= 0:
 		pass
-		
+	if get_tree().paused:
+		return
+	
 	var removed_a_card = false
 	for child in enemy.hand:
 		if removed_a_card:
@@ -205,12 +230,19 @@ func enemy_play_turn():
 				remove_enemy_cards(child,poolchild)
 				removed_a_card = true
 				break
+	
+	if not removed_a_card:
+		reparent_card(enemy.hand[0])
+		await get_tree().create_timer(3.0).timeout
 	enemy_draw_and_play_card()
 
 func enemy_draw_and_play_card():
 	if deck.cards.size() <= 0:
 		pass
-		
+	
+	if get_tree().paused:
+		return
+	
 	clear_container(drawn_card_display)
 	var drawn_card = deck.draw_card()
 	var found_card = false
@@ -242,3 +274,193 @@ func is_card_in_container(card: Node) -> String:
 	
 	return "none"
 	
+
+#------WINNING CONDITIONS CHECK---------------------------------------------
+func check_winning_conditions() -> int:
+	var count = 0
+	count += check_if_ten_chaff()
+	count += check_for_cards_of_month()
+	count += check_moon_sake()
+	count += check_sakura_sake()
+	count += check_ribbons()
+	count += check_animals()
+	count += check_boar_deer_butterfly()
+	count += check_brights()
+	return count
+
+#10 chaff cards = 1 point. Each new added chaff +1
+func check_if_ten_chaff() -> int:
+	var count = 0
+	if current_turn == Turn.PLAYER:
+		for card in player.played_cards:
+			if card.type == CardRes.Type.CHAFF:
+				count+=1
+	else:
+		for card in enemy.played_cards:
+			if card.type == CardRes.Type.CHAFF:
+				count+=1
+	if count >= 10:
+		return count-9
+	return 0
+
+#4 cards of the same month
+func check_for_cards_of_month() ->int:
+	var count = 0
+	var played_cards: Array[CardRes]
+	if current_turn == Turn.PLAYER:
+		played_cards = player.played_cards
+	else :
+		played_cards = enemy.played_cards
+		
+	played_cards.sort_custom(func(a,b): return a.id < b.id)
+	
+	if played_cards.size() >=4:
+		for i in range(played_cards.size()-3):
+			if played_cards[0+i].month==played_cards[1+i].month \
+			and played_cards[0+i].month==played_cards[2+i].month \
+			and played_cards[0+i].month==played_cards[3+i].month:
+				count+=4
+				i+=3
+			else:
+				i+=1
+	return count
+
+func check_moon_sake() ->int:
+	var played_cards: Array[CardRes]
+	if current_turn == Turn.PLAYER:
+		played_cards = player.played_cards
+	else:
+		played_cards = enemy.played_cards
+		
+	for card in played_cards:
+		if card.subtype == CardRes.Subtype.SAKE:
+			for card2 in played_cards:
+				if card.subtype == CardRes.Subtype.MOON:
+					return 5
+	return 0
+
+func check_sakura_sake()->int:
+	var played_cards: Array[CardRes]
+	if current_turn == Turn.PLAYER:
+		played_cards = player.played_cards
+	else:
+		played_cards = enemy.played_cards
+		
+	for card in played_cards:
+		if card.subtype == CardRes.Subtype.SAKE:
+			for card2 in played_cards:
+				if card.subtype == CardRes.Subtype.FLOWERS:
+					return 5
+	return 0
+	
+func check_ribbons() -> int:
+	var count=0
+	var blue=0
+	var poetry=0
+	var ribbons=0
+	var played_cards: Array[CardRes]
+	if current_turn == Turn.PLAYER:
+		played_cards = player.played_cards
+	else:
+		played_cards = enemy.played_cards
+		
+	for card in played_cards:
+		if card.type == CardRes.Type.RIBBON:
+			if card.subtype == CardRes.Subtype.POETRY:
+				poetry+=1
+			elif card.subtype == CardRes.Subtype.BLUE:
+				blue+=1
+			ribbons+=1
+	
+	if ribbons >= 5:
+		count += ribbons -4
+	if poetry >=3:
+		count+= 5 + poetry-3
+	if blue >= 3:
+		count+= 5 + blue-3
+	 
+	return count
+	
+func check_boar_deer_butterfly()->int:
+	var played_cards: Array[CardRes]
+	if current_turn == Turn.PLAYER:
+		played_cards=player.played_cards
+	else:
+		played_cards=player.played_cards
+		
+	var has_boar = false
+	var has_deer = false
+	var has_butterfly = false
+	
+	for card in played_cards:
+		if card.subtype == CardRes.Subtype.DEER:
+			has_deer = true
+		if card.subtype == CardRes.Subtype.BOAR:
+			has_boar = true
+		if card.subtype == CardRes.Subtype.BUTTERFLY:
+			has_butterfly = true
+	
+	if has_boar and has_butterfly and has_deer:
+		return 5
+	
+	return 0
+	
+func check_animals() -> int:
+	var played_cards: Array[CardRes]
+	if current_turn == Turn.PLAYER:
+		played_cards=player.played_cards
+	else:
+		played_cards=player.played_cards
+	
+	var count=0
+	for card in played_cards:
+		if card.type == CardRes.Type.ANIMAL:
+			count+=1
+	if count >= 5:
+		return 1 + count - 5
+	
+	return 0
+	
+func check_brights() -> int:
+	var played_cards: Array[CardRes]
+	if current_turn == Turn.PLAYER:
+		played_cards=player.played_cards
+	else:
+		played_cards=player.played_cards
+	
+	var count=0
+	var is_rain_man = false
+	for card in played_cards:
+		if card.type == CardRes.Type.BRIGHT:
+			count+=1
+			if card.subtype == CardRes.Subtype.RAIN:
+				is_rain_man = true
+	
+	if count == 3 and not is_rain_man:
+		return 6
+	elif count == 4 and not is_rain_man:
+		return 8
+	elif count == 4 and is_rain_man:
+		return 7
+	elif count == 5:
+		return 10
+	
+	return 0
+
+
+func on_popup_show():
+	popup_window.show()
+	
+
+func _on_shobu_pressed():
+	popup_window.hide()
+	get_tree().paused = false
+
+func _on_koi_koi_pressed():
+	if current_turn == Turn.ENEMY:
+		enemy.take_damage(player.stored_points)
+	else:
+		player.take_damage(enemy.stored_points)
+	
+	get_tree().paused = false
+	start_new_game()
