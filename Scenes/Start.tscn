@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://cbbbmxausp8u0"]
+[gd_scene load_steps=8 format=3 uid="uid://cbbbmxausp8u0"]
 
 [ext_resource type="FontFile" uid="uid://bobwwwgmk83ke" path="res://Fonts/Orchidee/OrchideeMedium.ttf" id="1_iy25a"]
 [ext_resource type="Script" path="res://Scripts/StartMenu.gd" id="1_mst7h"]
-[ext_resource type="PackedScene" uid="uid://djmieh5me8ifr" path="res://Scenes/BackGroundMusic.tscn" id="1_o60ua"]
 [ext_resource type="Texture2D" uid="uid://d28fuc3ns8v8j" path="res://Assets/7602494.jpg" id="1_rqtvh"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kmkcr"]
@@ -55,8 +54,6 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_mst7h")
-
-[node name="BGMusic" parent="Control" instance=ExtResource("1_o60ua")]
 
 [node name="Button_End" type="Button" parent="Control"]
 material = SubResource("CanvasItemMaterial_vcu1k")

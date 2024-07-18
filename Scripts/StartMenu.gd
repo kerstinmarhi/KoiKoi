@@ -3,7 +3,7 @@ extends Control
 @onready var audioplayer = $BGMusic
 
 func _ready():
-	BackGroundMusic.play_bg_music()
+	#BackGroundMusic.play_bg_music()
 	$Button_NewGame.pressed.connect(self._on_NewGame_pressed)
 	$Button_End.pressed.connect(self._on_Quit_pressed)
 
